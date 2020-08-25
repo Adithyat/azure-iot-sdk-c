@@ -163,7 +163,7 @@ int main()
     (void)IoTHub_Init();
     (void)prov_dev_security_init(hsm_type);
     // Set the symmetric key if using they auth type
-    prov_dev_set_symmetric_key_info("sn-007-888-abc-mac-a1-b2-c3-d4-e5-f6", "+AzidoHYdobkcDX/AczL8ekFUB3I61253pbNylFmHlI5XGRebWpp2gMchJCx3+SJutJHm3F8BqdVmYd/aAG2nA==");
+    prov_dev_set_symmetric_key_info("sn-007-888-abc-mac-a1-b2-c3-d4-e5-f6", "VgHDkLT+ruSK5QTc4E8jbvY1FMcskPjIxNIJFJsFjnc=");
 
     PROV_DEVICE_TRANSPORT_PROVIDER_FUNCTION prov_transport;
     HTTP_PROXY_OPTIONS http_proxy;
