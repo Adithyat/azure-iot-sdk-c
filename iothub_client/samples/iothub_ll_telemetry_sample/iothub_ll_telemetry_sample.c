@@ -148,8 +148,8 @@ int main(void)
             {
                 // Construct the iothub message from a string or a byte array
                 //message_handle = IoTHubMessage_CreateFromString(telemetry_msg);
-                fgets(msgText, sizeof(msgText), fp)
-                message_handle = IoTHubMessage_CreateFromByteArray((const unsigned char*)msgText, strlen(msgText)));
+                fgets(msgText, sizeof(msgText), fp);
+                message_handle = IoTHubMessage_CreateFromByteArray((const unsigned char *)msgText, strlen(msgText));
 
                 // Set Message property
 
