@@ -82,7 +82,7 @@ int main(void)
     IOTHUB_CLIENT_TRANSPORT_PROVIDER protocol;
     IOTHUB_MESSAGE_HANDLE message_handle;
     size_t messages_sent = 0;
-    const char *telemetry_msg = "test_message";
+    const char *telemetry_msg = "{ \"MGPID\": 48, \"MGPLabel\": \"X_tilt\", \"MGPName\": \"X_tilt\", \"Timestamp\": \"2020-08-12 17:57:02\", \"usec\": 492949, \"ParamVal\": \"88.000000\" }";
 
     // Select the Protocol to use with the connection
 #ifdef SAMPLE_MQTT
