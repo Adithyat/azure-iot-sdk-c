@@ -49,7 +49,7 @@ and removing calls to _DoWork will yield the same results. */
 #endif // SAMPLE_HTTP
 
 /* Paste in the your iothub connection string  */
-static const char *connectionString = "HostName=iot-danadf-dev.azure-devices.net;DeviceId=clt17-v001-dev-00000001;SharedAccessKey=ho5qKYSNwtpNlLdLznAwHRvi+O4rqHtwsXw8nnapUY0=";
+static const char *connectionString = "HostName=RBPI-demo.azure-devices.net;DeviceId=temp_demo;SharedAccessKey=5XLNTIOlGmpyvNBcT3w0IbGXAoh5NjjCSRptPGBCUFc=";
 #define MESSAGE_COUNT 5
 static bool g_continueRunning = true;
 static size_t g_message_count_send_confirmations = 0;
