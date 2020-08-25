@@ -141,43 +141,56 @@ int main(void)
         // Setting connection status callback to get indication of connection to iothub
         (void)IoTHubDeviceClient_LL_SetConnectionStatusCallback(device_ll_handle, connection_status_callback, NULL);
 
-        FILE *fp = fopen("LOG.json", "r");
-
-        //message_handle = IoTHubMessage_CreateFromByteArray((const unsigned char*)buffer, strlen(buffer));
-        char buffer[200];
-        while (fgets(buffer, sizeof(buffer), fp))
+        do
         {
-            // Basic avro setup (not compressed)
-            const char *ptr = buffer;
+            if (messages_sent < MESSAGE_COUNT)
+            {
+                // Construct the iothub message from a string or a byte array
+                message_handle = IoTHubMessage_CreateFromString(telemetry_msg);
+                //message_handle = IoTHubMessage_CreateFromByteArray((const unsigned char*)msgText, strlen(msgText)));
 
-            message_handle = IoTHubMessage_CreateFromString(ptr);
+                // Set Message property
 
-            // add custom properties to message
-            (void)IoTHubMessage_SetProperty(message_handle, "Fleet Id", "property_value");
-            (void)IoTHubMessage_SetProperty(message_handle, "Customer Id", "property_value");
-            (void)IoTHubMessage_SetProperty(message_handle, "Program Id", "property_value");
-            (void)IoTHubMessage_SetProperty(message_handle, "Region Id", "property_value");
-            (void)IoTHubMessage_SetProperty(message_handle, "Device type", "property_value");
-            (void)IoTHubMessage_SetProperty(message_handle, "Message Version", "property_value");
-            (void)IoTHubMessage_SetProperty(message_handle, "VIN", "property_value");
-            (void)IoTHubMessage_SetProperty(message_handle, "Telematics Device Number", "property_value");
-            (void)IoTHubMessage_SetProperty(message_handle, "Provider", "property_value");
-            (void)IoTHubMessage_SetProperty(message_handle, "Device Release Version", "property_value");
-            (void)IoTHubMessage_SetProperty(message_handle, "Manufacturing Plant", "property_value");
+                (void)IoTHubMessage_SetMessageId(message_handle, "MSG_ID");
+                (void)IoTHubMessage_SetCorrelationId(message_handle, "CORE_ID");
+                //(void)IoTHubMessage_SetContentTypeSystemProperty(message_handle, "application%2fjson");
+                //(void)IoTHubMessage_SetContentEncodingSystemProperty(message_handle, "utf-8");
+                //(void)IoTHubMessage_SetMessageCreationTimeUtcSystemProperty(message_handle, "2020-07-01T01:00:00.346Z");
 
-            messages_sent++;
-            (void)printf("sending message %d to iothub\r\n", (int)(messages_sent));
+                // Add custom properties to message
+                (void)IoTHubMessage_SetProperty(message_handle, "Fleet Id", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Customer Id", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Program Id", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Region Id", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Device type", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Message Version", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "VIN", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Telematics Device Number", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Provider", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Device Release Version", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Manufacturing Plant", "property_value");
 
-            IoTHubDeviceClient_LL_SendEventAsync(device_ll_handle, message_handle, send_confirm_callback, NULL);
+                (void)printf("Sending message %d to IoTHub\r\n", (int)(messages_sent + 1));
+                IoTHubDeviceClient_LL_SendEventAsync(device_ll_handle, message_handle, send_confirm_callback, NULL);
 
-            // The message is copied to the sdk so the we can destroy it
-            IoTHubMessage_Destroy(message_handle);
+                // The message is copied to the sdk so the we can destroy it
+                IoTHubMessage_Destroy(message_handle);
+
+                messages_sent++;
+            }
+            else if (g_message_count_send_confirmations >= MESSAGE_COUNT)
+            {
+                // After all messages are all received stop running
+                g_continueRunning = false;
+            }
+
             IoTHubDeviceClient_LL_DoWork(device_ll_handle);
-            ThreadAPI_Sleep(100);
-        }
+            ThreadAPI_Sleep(1);
+
+        } while (g_continueRunning);
+
         // Clean up the iothub sdk handle
         IoTHubDeviceClient_LL_Destroy(device_ll_handle);
-        fclose(fp);
     }
     // Free all the sdk subsystem
     IoTHub_Deinit();
