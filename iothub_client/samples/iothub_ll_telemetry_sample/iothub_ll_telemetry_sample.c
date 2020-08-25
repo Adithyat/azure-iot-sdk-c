@@ -140,16 +140,16 @@ int main(void)
 
         // Setting connection status callback to get indication of connection to iothub
         (void)IoTHubDeviceClient_LL_SetConnectionStatusCallback(device_ll_handle, connection_status_callback, NULL);
-        FILE *fp = fopen("LOG.json", "r");
-        char msgText[200];
+        //FILE *fp = fopen("LOG.json", "r");
+        //char msgText[200];
         do
         {
             if (messages_sent < MESSAGE_COUNT)
             {
                 // Construct the iothub message from a string or a byte array
-                //message_handle = IoTHubMessage_CreateFromString(telemetry_msg);
-                fgets(msgText, sizeof(msgText), fp);
-                message_handle = IoTHubMessage_CreateFromByteArray((const unsigned char *)msgText, strlen(msgText));
+                message_handle = IoTHubMessage_CreateFromString(telemetry_msg);
+                //fgets(msgText, sizeof(msgText), fp);
+                //message_handle = IoTHubMessage_CreateFromByteArray((const unsigned char *)msgText, strlen(msgText));
 
                 // Set Message property
 
@@ -193,7 +193,7 @@ int main(void)
 
         // Clean up the iothub sdk handle
         IoTHubDeviceClient_LL_Destroy(device_ll_handle);
-        fclose(fp);
+        //fclose(fp);
     }
     // Free all the sdk subsystem
     IoTHub_Deinit();
