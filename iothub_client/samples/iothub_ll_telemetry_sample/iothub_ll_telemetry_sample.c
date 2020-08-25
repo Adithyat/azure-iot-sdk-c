@@ -33,29 +33,28 @@ and removing calls to _DoWork will yield the same results. */
 //#define SAMPLE_HTTP
 
 #ifdef SAMPLE_MQTT
-    #include "iothubtransportmqtt.h"
+#include "iothubtransportmqtt.h"
 #endif // SAMPLE_MQTT
 #ifdef SAMPLE_MQTT_OVER_WEBSOCKETS
-    #include "iothubtransportmqtt_websockets.h"
+#include "iothubtransportmqtt_websockets.h"
 #endif // SAMPLE_MQTT_OVER_WEBSOCKETS
 #ifdef SAMPLE_AMQP
-    #include "iothubtransportamqp.h"
+#include "iothubtransportamqp.h"
 #endif // SAMPLE_AMQP
 #ifdef SAMPLE_AMQP_OVER_WEBSOCKETS
-    #include "iothubtransportamqp_websockets.h"
+#include "iothubtransportamqp_websockets.h"
 #endif // SAMPLE_AMQP_OVER_WEBSOCKETS
 #ifdef SAMPLE_HTTP
-    #include "iothubtransporthttp.h"
+#include "iothubtransporthttp.h"
 #endif // SAMPLE_HTTP
 
-
 /* Paste in the your iothub connection string  */
-static const char* connectionString = "HostName=iot-danadf-dev.azure-devices.net;DeviceId=clt17-v001-dev-00000001;SharedAccessKey=ho5qKYSNwtpNlLdLznAwHRvi+O4rqHtwsXw8nnapUY0=";
-#define MESSAGE_COUNT        5
+static const char *connectionString = "HostName=iot-danadf-dev.azure-devices.net;DeviceId=clt17-v001-dev-00000001;SharedAccessKey=ho5qKYSNwtpNlLdLznAwHRvi+O4rqHtwsXw8nnapUY0=";
+#define MESSAGE_COUNT 5
 static bool g_continueRunning = true;
 static size_t g_message_count_send_confirmations = 0;
 
-static void send_confirm_callback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void* userContextCallback)
+static void send_confirm_callback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void *userContextCallback)
 {
     (void)userContextCallback;
     // When a message is sent this callback will get envoked
@@ -63,7 +62,7 @@ static void send_confirm_callback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void
     (void)printf("Confirmation callback received for message %lu with result %s\r\n", (unsigned long)g_message_count_send_confirmations, MU_ENUM_TO_STRING(IOTHUB_CLIENT_CONFIRMATION_RESULT, result));
 }
 
-static void connection_status_callback(IOTHUB_CLIENT_CONNECTION_STATUS result, IOTHUB_CLIENT_CONNECTION_STATUS_REASON reason, void* user_context)
+static void connection_status_callback(IOTHUB_CLIENT_CONNECTION_STATUS result, IOTHUB_CLIENT_CONNECTION_STATUS_REASON reason, void *user_context)
 {
     (void)reason;
     (void)user_context;
@@ -83,7 +82,7 @@ int main(void)
     IOTHUB_CLIENT_TRANSPORT_PROVIDER protocol;
     IOTHUB_MESSAGE_HANDLE message_handle;
     size_t messages_sent = 0;
-    const char* telemetry_msg = "test_message";
+    const char *telemetry_msg = "test_message";
 
     // Select the Protocol to use with the connection
 #ifdef SAMPLE_MQTT
@@ -128,7 +127,7 @@ int main(void)
 #ifdef SET_TRUSTED_CERT_IN_SAMPLES
         // Setting the Trusted Certificate. This is only necessary on systems without
         // built in certificate stores.
-            IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
+        IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
 #endif // SET_TRUSTED_CERT_IN_SAMPLES
 
 #if defined SAMPLE_MQTT || defined SAMPLE_MQTT_WS
@@ -151,17 +150,25 @@ int main(void)
                 //message_handle = IoTHubMessage_CreateFromByteArray((const unsigned char*)msgText, strlen(msgText)));
 
                 // Set Message property
-                /*
+
                 (void)IoTHubMessage_SetMessageId(message_handle, "MSG_ID");
                 (void)IoTHubMessage_SetCorrelationId(message_handle, "CORE_ID");
-                (void)IoTHubMessage_SetContentTypeSystemProperty(message_handle, "application%2fjson");
-                (void)IoTHubMessage_SetContentEncodingSystemProperty(message_handle, "utf-8");
-                (void)IoTHubMessage_SetMessageCreationTimeUtcSystemProperty(message_handle, "2020-07-01T01:00:00.346Z");
-                */
-
+                //(void)IoTHubMessage_SetContentTypeSystemProperty(message_handle, "application%2fjson");
+                //(void)IoTHubMessage_SetContentEncodingSystemProperty(message_handle, "utf-8");
+                //(void)IoTHubMessage_SetMessageCreationTimeUtcSystemProperty(message_handle, "2020-07-01T01:00:00.346Z");
 
                 // Add custom properties to message
-                (void)IoTHubMessage_SetProperty(message_handle, "property_key", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Fleet Id", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Customer Id", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Program Id", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Region Id", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Device type", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Message Version", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "VIN", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Telematics Device Number", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Provider", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Device Release Version", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "Manufacturing Plant", "property_value");
 
                 (void)printf("Sending message %d to IoTHub\r\n", (int)(messages_sent + 1));
                 IoTHubDeviceClient_LL_SendEventAsync(device_ll_handle, message_handle, send_confirm_callback, NULL);
