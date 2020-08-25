@@ -64,23 +64,23 @@
 MU_DEFINE_ENUM_STRINGS_WITHOUT_INVALID(PROV_DEVICE_RESULT, PROV_DEVICE_RESULT_VALUE);
 MU_DEFINE_ENUM_STRINGS_WITHOUT_INVALID(PROV_DEVICE_REG_STATUS, PROV_DEVICE_REG_STATUS_VALUES);
 
-static const char* global_prov_uri = "global.azure-devices-provisioning.net";
-static const char* id_scope = "0ne00161FA7";
+static const char *global_prov_uri = "global.azure-devices-provisioning.net";
+static const char *id_scope = "0ne00161FA7";
 
 static bool g_use_proxy = false;
-static const char* PROXY_ADDRESS = "127.0.0.1";
+static const char *PROXY_ADDRESS = "127.0.0.1";
 
-#define PROXY_PORT                  8888
-#define MESSAGES_TO_SEND            2
-#define TIME_BETWEEN_MESSAGES       2
+#define PROXY_PORT 8888
+#define MESSAGES_TO_SEND 2
+#define TIME_BETWEEN_MESSAGES 2
 
 typedef struct CLIENT_SAMPLE_INFO_TAG
 {
     unsigned int sleep_time;
-    char* iothub_uri;
-    char* access_key_name;
-    char* device_key;
-    char* device_id;
+    char *iothub_uri;
+    char *access_key_name;
+    char *device_key;
+    char *device_id;
     int registration_complete;
 } CLIENT_SAMPLE_INFO;
 
@@ -90,22 +90,22 @@ typedef struct IOTHUB_CLIENT_SAMPLE_INFO_TAG
     int stop_running;
 } IOTHUB_CLIENT_SAMPLE_INFO;
 
-static IOTHUBMESSAGE_DISPOSITION_RESULT receive_msg_callback(IOTHUB_MESSAGE_HANDLE message, void* user_context)
+static IOTHUBMESSAGE_DISPOSITION_RESULT receive_msg_callback(IOTHUB_MESSAGE_HANDLE message, void *user_context)
 {
     (void)message;
-    IOTHUB_CLIENT_SAMPLE_INFO* iothub_info = (IOTHUB_CLIENT_SAMPLE_INFO*)user_context;
+    IOTHUB_CLIENT_SAMPLE_INFO *iothub_info = (IOTHUB_CLIENT_SAMPLE_INFO *)user_context;
     (void)printf("Stop message recieved from IoTHub\r\n");
     iothub_info->stop_running = 1;
     return IOTHUBMESSAGE_ACCEPTED;
 }
 
-static void registration_status_callback(PROV_DEVICE_REG_STATUS reg_status, void* user_context)
+static void registration_status_callback(PROV_DEVICE_REG_STATUS reg_status, void *user_context)
 {
     (void)user_context;
     (void)printf("Provisioning Status: %s\r\n", MU_ENUM_TO_STRING(PROV_DEVICE_REG_STATUS, reg_status));
 }
 
-static void iothub_connection_status(IOTHUB_CLIENT_CONNECTION_STATUS result, IOTHUB_CLIENT_CONNECTION_STATUS_REASON reason, void* user_context)
+static void iothub_connection_status(IOTHUB_CLIENT_CONNECTION_STATUS result, IOTHUB_CLIENT_CONNECTION_STATUS_REASON reason, void *user_context)
 {
     (void)reason;
     if (user_context == NULL)
@@ -114,7 +114,7 @@ static void iothub_connection_status(IOTHUB_CLIENT_CONNECTION_STATUS result, IOT
     }
     else
     {
-        IOTHUB_CLIENT_SAMPLE_INFO* iothub_info = (IOTHUB_CLIENT_SAMPLE_INFO*)user_context;
+        IOTHUB_CLIENT_SAMPLE_INFO *iothub_info = (IOTHUB_CLIENT_SAMPLE_INFO *)user_context;
         if (result == IOTHUB_CLIENT_CONNECTION_AUTHENTICATED)
         {
             iothub_info->connected = 1;
@@ -127,7 +127,7 @@ static void iothub_connection_status(IOTHUB_CLIENT_CONNECTION_STATUS result, IOT
     }
 }
 
-static void register_device_callback(PROV_DEVICE_RESULT register_result, const char* iothub_uri, const char* device_id, void* user_context)
+static void register_device_callback(PROV_DEVICE_RESULT register_result, const char *iothub_uri, const char *device_id, void *user_context)
 {
     if (user_context == NULL)
     {
@@ -135,7 +135,7 @@ static void register_device_callback(PROV_DEVICE_RESULT register_result, const c
     }
     else
     {
-        CLIENT_SAMPLE_INFO* user_ctx = (CLIENT_SAMPLE_INFO*)user_context;
+        CLIENT_SAMPLE_INFO *user_ctx = (CLIENT_SAMPLE_INFO *)user_context;
         if (register_result == PROV_DEVICE_RESULT_OK)
         {
             (void)printf("Registration Information received from service: %s!\r\n", iothub_uri);
@@ -145,7 +145,7 @@ static void register_device_callback(PROV_DEVICE_RESULT register_result, const c
         }
         else
         {
-            (void)printf("Failure encountered on registration %s\r\n", MU_ENUM_TO_STRING(PROV_DEVICE_RESULT, register_result) );
+            (void)printf("Failure encountered on registration %s\r\n", MU_ENUM_TO_STRING(PROV_DEVICE_RESULT, register_result));
             user_ctx->registration_complete = 2;
         }
     }
@@ -163,7 +163,7 @@ int main()
     (void)IoTHub_Init();
     (void)prov_dev_security_init(hsm_type);
     // Set the symmetric key if using they auth type
-    prov_dev_set_symmetric_key_info("sn-007-888-abc-mac-a1-b2-c3-d4-e5-f6", "VgHDkLT+ruSK5QTc4E8jbvY1FMcskPjIxNIJFJsFjnc=");
+    prov_dev_set_symmetric_key_info("sn-007-888-abc-mac-a1-b2-c3-d4-e5-f7", "syRAanGmE917gUzolwXhpzAoMk/hDTOcu8Gn3kd2VKM=");
 
     PROV_DEVICE_TRANSPORT_PROVIDER_FUNCTION prov_transport;
     HTTP_PROXY_OPTIONS http_proxy;
@@ -221,7 +221,7 @@ int main()
         Prov_Device_LL_SetOption(handle, OPTION_TRUSTED_CERT, certificates);
 #endif // SET_TRUSTED_CERT_IN_SAMPLES
 
-        // This option sets the registration ID it overrides the registration ID that is 
+        // This option sets the registration ID it overrides the registration ID that is
         // set within the HSM so be cautious if setting this value
         //Prov_Device_LL_SetOption(handle, PROV_REGISTRATION_ID, "[REGISTRATION ID]");
 
@@ -265,7 +265,7 @@ int main()
         IOTHUB_DEVICE_CLIENT_LL_HANDLE device_ll_handle;
 
         (void)printf("Creating IoTHub Device handle\r\n");
-        if ((device_ll_handle = IoTHubDeviceClient_LL_CreateFromDeviceAuth(user_ctx.iothub_uri, user_ctx.device_id, iothub_transport) ) == NULL)
+        if ((device_ll_handle = IoTHubDeviceClient_LL_CreateFromDeviceAuth(user_ctx.iothub_uri, user_ctx.device_id, iothub_transport)) == NULL)
         {
             (void)printf("failed create IoTHub client from connection string %s!\r\n", user_ctx.iothub_uri);
         }
@@ -306,7 +306,7 @@ int main()
                         static char msgText[1024];
                         sprintf_s(msgText, sizeof(msgText), "{ \"message_index\" : \"%zu\" }", msg_count++);
 
-                        IOTHUB_MESSAGE_HANDLE msg_handle = IoTHubMessage_CreateFromByteArray((const unsigned char*)msgText, strlen(msgText));
+                        IOTHUB_MESSAGE_HANDLE msg_handle = IoTHubMessage_CreateFromByteArray((const unsigned char *)msgText, strlen(msgText));
                         if (msg_handle == NULL)
                         {
                             (void)printf("ERROR: iotHubMessageHandle is NULL!\r\n");
@@ -321,7 +321,6 @@ int main()
                             {
                                 (void)tickcounter_get_current_ms(tick_counter_handle, &last_send_time);
                                 (void)printf("IoTHubClient_LL_SendEventAsync accepted message [%zu] for transmission to IoT Hub.\r\n", msg_count);
-
                             }
                             IoTHubMessage_Destroy(msg_handle);
                         }
