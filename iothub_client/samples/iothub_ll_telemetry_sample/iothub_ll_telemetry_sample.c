@@ -188,7 +188,7 @@ int main(void)
             }
 
             IoTHubDeviceClient_LL_DoWork(device_ll_handle);
-            ThreadAPI_Sleep(910);
+            ThreadAPI_Sleep(993);
 
         } while (g_continueRunning);
 
