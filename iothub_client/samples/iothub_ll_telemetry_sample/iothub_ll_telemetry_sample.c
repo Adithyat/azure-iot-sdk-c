@@ -144,7 +144,7 @@ int main(void)
         //char msgText[200];
         do
         {
-            if (messages_sent < MESSAGE_COUNT)
+            if (1)
             {
                 // Construct the iothub message from a string or a byte array
                 message_handle = IoTHubMessage_CreateFromString(telemetry_msg);
@@ -153,8 +153,8 @@ int main(void)
 
                 // Set Message property
 
-                (void)IoTHubMessage_SetMessageId(message_handle, "215");
-                (void)IoTHubMessage_SetCorrelationId(message_handle, "CORE_ID");
+                //(void)IoTHubMessage_SetMessageId(message_handle, "215");
+                //(void)IoTHubMessage_SetCorrelationId(message_handle, "CORE_ID");
                 //(void)IoTHubMessage_SetContentTypeSystemProperty(message_handle, "application%2fjson");
                 //(void)IoTHubMessage_SetContentEncodingSystemProperty(message_handle, "utf-8");
                 //(void)IoTHubMessage_SetMessageCreationTimeUtcSystemProperty(message_handle, "2020-07-01T01:00:00.346Z");
