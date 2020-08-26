@@ -161,17 +161,17 @@ int main(void)
 
                 // Add custom properties to message
 
-                (void)IoTHubMessage_SetProperty(message_handle, "CustomerId", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "ProgramId", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "Region Id", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "DeviceType", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "CustomerId", "1");
+                (void)IoTHubMessage_SetProperty(message_handle, "ProgramId", "2");
+                (void)IoTHubMessage_SetProperty(message_handle, "Region Id", "3");
+                (void)IoTHubMessage_SetProperty(message_handle, "DeviceType", "4a");
                 (void)IoTHubMessage_SetProperty(message_handle, "MessageVersion", "23");
-                (void)IoTHubMessage_SetProperty(message_handle, "VIN", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "ESN", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "DeviceSignalTimestamp", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "Provider", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "DeviceReleaseVersion", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "PlantId", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "VIN", "523414");
+                (void)IoTHubMessage_SetProperty(message_handle, "ESN", "6432112");
+                (void)IoTHubMessage_SetProperty(message_handle, "DeviceSignalTimestamp", "7");
+                (void)IoTHubMessage_SetProperty(message_handle, "Provider", "DANA");
+                (void)IoTHubMessage_SetProperty(message_handle, "DeviceReleaseVersion", "1.0");
+                (void)IoTHubMessage_SetProperty(message_handle, "PlantId", "38");
 
                 (void)printf("Sending message %d to IoTHub\r\n", (int)(messages_sent + 1));
                 IoTHubDeviceClient_LL_SendEventAsync(device_ll_handle, message_handle, send_confirm_callback, NULL);
