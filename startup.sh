@@ -1,3 +1,4 @@
+#!/bin/bash
 cd cmake
 git pull origin
 make
