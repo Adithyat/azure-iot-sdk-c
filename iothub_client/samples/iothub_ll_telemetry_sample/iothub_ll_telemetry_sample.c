@@ -165,7 +165,7 @@ int main(void)
                 (void)IoTHubMessage_SetProperty(message_handle, "ProgramId", "2");
                 (void)IoTHubMessage_SetProperty(message_handle, "Region Id", "3");
                 (void)IoTHubMessage_SetProperty(message_handle, "DeviceType", "4a");
-                (void)IoTHubMessage_SetProperty(message_handle, "MessageVersion", "23");
+                (void)IoTHubMessage_SetProperty(message_handle, "MessageVersion", "24");
                 (void)IoTHubMessage_SetProperty(message_handle, "VIN", "523414");
                 (void)IoTHubMessage_SetProperty(message_handle, "ESN", "6432112");
                 (void)IoTHubMessage_SetProperty(message_handle, "DeviceSignalTimestamp", "7");
