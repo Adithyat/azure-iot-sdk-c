@@ -50,7 +50,7 @@ and removing calls to _DoWork will yield the same results. */
 
 /* Paste in the your iothub connection string  */
 static const char *connectionString = "HostName=iot-danadf-dev.azure-devices.net;DeviceId=clt17-v001-dev-00000001;SharedAccessKey=ho5qKYSNwtpNlLdLznAwHRvi+O4rqHtwsXw8nnapUY0=";
-#define MESSAGE_COUNT 5
+#define MESSAGE_COUNT 100
 static bool g_continueRunning = true;
 static size_t g_message_count_send_confirmations = 0;
 
@@ -153,24 +153,25 @@ int main(void)
 
                 // Set Message property
 
-                (void)IoTHubMessage_SetMessageId(message_handle, "MSG_ID");
+                (void)IoTHubMessage_SetMessageId(message_handle, "215");
                 (void)IoTHubMessage_SetCorrelationId(message_handle, "CORE_ID");
                 //(void)IoTHubMessage_SetContentTypeSystemProperty(message_handle, "application%2fjson");
                 //(void)IoTHubMessage_SetContentEncodingSystemProperty(message_handle, "utf-8");
                 //(void)IoTHubMessage_SetMessageCreationTimeUtcSystemProperty(message_handle, "2020-07-01T01:00:00.346Z");
 
                 // Add custom properties to message
-                (void)IoTHubMessage_SetProperty(message_handle, "Fleet Id", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "Customer Id", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "Program Id", "property_value");
+
+                (void)IoTHubMessage_SetProperty(message_handle, "CustomerId", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "ProgramId", "property_value");
                 (void)IoTHubMessage_SetProperty(message_handle, "Region Id", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "Device type", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "Message Version", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "DeviceType", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "MessageVersion", "23");
                 (void)IoTHubMessage_SetProperty(message_handle, "VIN", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "Telematics Device Number", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "ESN", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "DeviceSignalTimestamp", "property_value");
                 (void)IoTHubMessage_SetProperty(message_handle, "Provider", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "Device Release Version", "property_value");
-                (void)IoTHubMessage_SetProperty(message_handle, "Manufacturing Plant", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "DeviceReleaseVersion", "property_value");
+                (void)IoTHubMessage_SetProperty(message_handle, "PlantId", "property_value");
 
                 (void)printf("Sending message %d to IoTHub\r\n", (int)(messages_sent + 1));
                 IoTHubDeviceClient_LL_SendEventAsync(device_ll_handle, message_handle, send_confirm_callback, NULL);
@@ -187,7 +188,7 @@ int main(void)
             }
 
             IoTHubDeviceClient_LL_DoWork(device_ll_handle);
-            ThreadAPI_Sleep(1);
+            ThreadAPI_Sleep(100);
 
         } while (g_continueRunning);
 
