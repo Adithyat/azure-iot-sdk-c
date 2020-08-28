@@ -168,7 +168,7 @@ int main(void)
                 (void)IoTHubMessage_SetProperty(message_handle, "MessageVersion", "23");
                 (void)IoTHubMessage_SetProperty(message_handle, "VIN", "523414");
                 (void)IoTHubMessage_SetProperty(message_handle, "ESN", "6432112");
-                (void)IoTHubMessage_SetProperty(message_handle, "DeviceSignalTimestamp", "7");
+                (void)IoTHubMessage_SetProperty(message_handle, "DeviceSignalTimestamp", "2020-08-12 17:57:02");
                 (void)IoTHubMessage_SetProperty(message_handle, "Provider", "DANA");
                 (void)IoTHubMessage_SetProperty(message_handle, "DeviceReleaseVersion", "1.0");
                 (void)IoTHubMessage_SetProperty(message_handle, "PlantId", "38");
