@@ -65,7 +65,7 @@ MU_DEFINE_ENUM_STRINGS_WITHOUT_INVALID(PROV_DEVICE_RESULT, PROV_DEVICE_RESULT_VA
 MU_DEFINE_ENUM_STRINGS_WITHOUT_INVALID(PROV_DEVICE_REG_STATUS, PROV_DEVICE_REG_STATUS_VALUES);
 
 static const char *global_prov_uri = "global.azure-devices-provisioning.net";
-static const char *id_scope = "0ne00161FA7";
+static const char *id_scope = "0ne0016F2BF";
 
 static bool g_use_proxy = false;
 static const char *PROXY_ADDRESS = "127.0.0.1";
@@ -163,7 +163,7 @@ int main()
     (void)IoTHub_Init();
     (void)prov_dev_security_init(hsm_type);
     // Set the symmetric key if using they auth type
-    prov_dev_set_symmetric_key_info("sn-007-888-abc-mac-a1-b2-c3-d4-e5-f8", "E2/z73yNoLkh9dLMJCZ6orAg4SQKoY/bhON1cHxaCPk=");
+    prov_dev_set_symmetric_key_info("sn-007-888-abc-mac-a1-b2-c3-d4-e5-f8", "SpZJ+7nbrBW9wRDdKsbKsLlo1jrYbwEi37KMjBvxm7U=");
 
     PROV_DEVICE_TRANSPORT_PROVIDER_FUNCTION prov_transport;
     HTTP_PROXY_OPTIONS http_proxy;
